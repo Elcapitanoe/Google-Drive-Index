@@ -1,3 +1,5 @@
+# Simple Google Drive File Index
+Just a simple, easy file index to help you find and share your stuff without any hassle. Everything’s neatly organized for quick access!
 # Screenshot
-<a href="https://imgur.com/B84KQhY"><img src="https://i.imgur.com/B84KQhY.png" title="source: imgur.com" /></a> <br>
-<a href="https://imgur.com/45xP8wg"><img src="https://i.imgur.com/45xP8wg.png" title="source: imgur.com" /></a>
+<img src="https://i.imgur.com/B84KQhY.png" width="150" /> <br>
+<img src="https://i.imgur.com/45xP8wg.png" width="150" />
