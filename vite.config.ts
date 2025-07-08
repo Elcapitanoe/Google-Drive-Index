@@ -1,7 +1,9 @@
 import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
 import { resolve } from 'path';
 
 export default defineConfig({
+  plugins: [react()],
   resolve: {
     alias: {
       '@': resolve(__dirname, './src'),
@@ -10,19 +12,7 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     sourcemap: true,
-    rollupOptions: {
-      input: {
-        main: resolve(__dirname, 'index.html'),
-        worker: resolve(__dirname, 'src/cloudflare-worker.ts'),
-      },
-      output: {
-        entryFileNames: (chunkInfo) => {
-          return chunkInfo.name === 'worker' 
-            ? 'worker.js' 
-            : 'assets/[name]-[hash].js';
-        },
-      },
-    },
+    chunkSizeWarningLimit: 1000,
     target: 'es2022',
     minify: 'esbuild',
   },
