@@ -48,10 +48,8 @@ const SortInfo = styled.span`
 
 export const HomePage: React.FC = () => {
   const { files, stats, filter, updateFilter, clearFilter } = useFiles();
-  const [selectedFile, setSelectedFile] = useState<FileMetadata | null>(null);
 
   const handleFileClick = (file: FileMetadata) => {
-    setSelectedFile(file);
     // In a real app, this might navigate to a file detail page
     console.log('File clicked:', file);
   };

@@ -9,6 +9,6 @@ import { RequestHandler } from './handlers/request-handler';
 const requestHandler = RequestHandler.getInstance();
 
 // Event listener for fetch events
-addEventListener('fetch', (event: FetchEvent) => {
+addEventListener('fetch', (event: any) => {
   event.respondWith(requestHandler.handleRequest(event.request));
 });

@@ -3,18 +3,29 @@ import styled from 'styled-components';
 import { format } from 'date-fns';
 import { FileMetadata } from '../../types';
 import { FileIcon } from './FileIcon';
-import { Card } from '../common/Card';
+import styled from 'styled-components';
 
 interface FileCardProps {
   file: FileMetadata;
   onClick?: (file: FileMetadata) => void;
 }
 
-const StyledCard = styled(Card)`
+const StyledCard = styled.div`
+  background-color: ${({ theme }) => theme.colors.surface};
+  border: 1px solid ${({ theme }) => theme.colors.border};
+  border-radius: ${({ theme }) => theme.borderRadius};
+  box-shadow: ${({ theme }) => theme.shadows.sm};
+  transition: all 0.2s ease-in-out;
+  padding: ${({ theme }) => theme.spacing.md};
   cursor: pointer;
   height: 100%;
   display: flex;
   flex-direction: column;
+
+  &:hover {
+    box-shadow: ${({ theme }) => theme.shadows.md};
+    border-color: ${({ theme }) => theme.colors.borderHover};
+  }
 `;
 
 const FileHeader = styled.div`
@@ -88,7 +99,7 @@ export const FileCard: React.FC<FileCardProps> = ({ file, onClick }) => {
   };
 
   return (
-    <StyledCard hover onClick={handleClick}>
+    <StyledCard onClick={handleClick}>
       <FileHeader>
         <FileIcon category={file.category} size={32} />
         <FileInfo>
