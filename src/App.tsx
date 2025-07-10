@@ -11,8 +11,8 @@ const HomePage = React.lazy(() => import('./pages/HomePage').then(module => ({ d
 
 const App: React.FC = () => {
   return (
-    <ErrorBoundary>
-      <ThemeProvider>
+    <ThemeProvider>
+      <ErrorBoundary>
         <GlobalStyles />
         <Router>
           <Layout>
@@ -24,8 +24,8 @@ const App: React.FC = () => {
             </Suspense>
           </Layout>
         </Router>
-      </ThemeProvider>
-    </ErrorBoundary>
+      </ErrorBoundary>
+    </ThemeProvider>
   );
 };
 

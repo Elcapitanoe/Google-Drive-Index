@@ -118,18 +118,18 @@ export class DriveApiService {
 
     return result.files
       .filter(file => !file.trashed)
-      .map(file => ({
+      .map((file: DriveFile) => ({
         id: file.id,
         name: file.name,
-        mimeType: file.mimeType === 'application/vnd.google-apps.folder' 
+        mimeType: (file as DriveFile).mimeType === 'application/vnd.google-apps.folder' 
           ? 'folder' 
-          : file.mimeType,
+          : (file as DriveFile).mimeType,
         size: file.size,
         createdTime: file.createdTime,
         modifiedTime: file.modifiedTime,
-        link: file.mimeType === 'application/vnd.google-apps.folder'
+        link: (file as DriveFile).mimeType === 'application/vnd.google-apps.folder'
           ? `/${file.id}`
           : `${API_ENDPOINTS.DOWNLOAD}${file.id}`,
-      }));
+      })) as ProcessedFile[];
   }
 }

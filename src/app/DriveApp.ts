@@ -2,21 +2,18 @@ import { ClipboardManager } from '../utils/clipboard';
 import { ToastManager } from '../utils/toast';
 import { UIRenderer } from '../components/UIRenderer';
 import { MockDriveService } from '../services/MockDriveService';
-import type { ProcessedFile } from '../types';
+import type { ProcessedFile, FileDetails, Breadcrumb } from '../types';
 
 /**
  * Main application class for PAMBI Drive
  */
 export class DriveApp {
   private clipboardManager: ClipboardManager;
-  private toastManager: ToastManager;
   private uiRenderer: UIRenderer;
   private driveService: MockDriveService;
-  private currentPath: string = '';
 
   constructor() {
     this.clipboardManager = ClipboardManager.getInstance();
-    this.toastManager = ToastManager.getInstance();
     this.uiRenderer = UIRenderer.getInstance();
     this.driveService = MockDriveService.getInstance();
     this.init();
@@ -60,7 +57,7 @@ export class DriveApp {
   /**
    * Handle browser back/forward navigation
    */
-  private handlePopState(event: PopStateEvent): void {
+  private handlePopState(_event: PopStateEvent): void {
     const path = window.location.pathname;
     this.navigateToPath(path, false);
   }
