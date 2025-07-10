@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { format } from 'date-fns';
 import { FileMetadata } from '../../types';
 import { FileIcon } from './FileIcon';
-import styled from 'styled-components';
 
 interface FileCardProps {
   file: FileMetadata;
