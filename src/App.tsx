@@ -7,7 +7,9 @@ import { ErrorBoundary } from './components/ErrorBoundary';
 import { LoadingSpinner } from './components/common/LoadingSpinner';
 
 // Lazy load pages for code splitting
-const HomePage = React.lazy(() => import('./pages/HomePage').then(module => ({ default: module.HomePage })));
+const HomePage = React.lazy(() =>
+  import('./pages/HomePage').then(module => ({ default: module.HomePage }))
+);
 
 const App: React.FC = () => {
   return (

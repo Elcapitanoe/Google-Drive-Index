@@ -45,10 +45,10 @@ export class AuthService {
       }
 
       const result: TokenResponse = await response.json();
-      
+
       this.cachedToken = result.access_token;
       this.tokenExpiry = Date.now() + (result.expires_in - 60) * 1000; // Refresh 1 minute early
-      
+
       return result.access_token;
     } catch (error) {
       console.error('Failed to get access token:', error);

@@ -61,41 +61,35 @@ export const HomePage: React.FC = () => {
       dateCreated: 'Date Created',
       dateModified: 'Date Modified',
     };
-    
+
     const sortLabel = sortLabels[filter.sortBy || 'name'];
     const orderLabel = filter.sortOrder === 'desc' ? 'descending' : 'ascending';
-    
+
     return `${sortLabel} (${orderLabel})`;
   };
 
   return (
     <PageContainer>
       <PageTitle>File Manager</PageTitle>
-      
+
       <FileStats stats={stats} />
-      
+
       <FileFilters
         filter={filter}
         onFilterChange={updateFilter}
         onClearFilters={clearFilter}
       />
-      
+
       <ResultsInfo>
         <ResultsCount>
-          {files.length === 1 
-            ? '1 file found' 
-            : `${files.length.toLocaleString()} files found`
-          }
+          {files.length === 1
+            ? '1 file found'
+            : `${files.length.toLocaleString()} files found`}
         </ResultsCount>
-        <SortInfo>
-          Sorted by {getSortLabel()}
-        </SortInfo>
+        <SortInfo>Sorted by {getSortLabel()}</SortInfo>
       </ResultsInfo>
-      
-      <FileGrid
-        files={files}
-        onFileClick={handleFileClick}
-      />
+
+      <FileGrid files={files} onFileClick={handleFileClick} />
     </PageContainer>
   );
 };

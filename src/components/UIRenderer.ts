@@ -53,17 +53,21 @@ export class UIRenderer {
    */
   private renderBreadcrumbs(breadcrumbs: Breadcrumb[]): string {
     const homeLink = '<a href="/" data-nav="/">Home</a>';
-    
+
     if (!breadcrumbs.length) {
       return homeLink;
     }
 
-    const crumbLinks = breadcrumbs.map(crumb => `
+    const crumbLinks = breadcrumbs
+      .map(
+        crumb => `
       <span class="breadcrumb-separator">/</span>
       <a href="${crumb.path}" data-nav="${crumb.path}" title="${sanitizeHtml(crumb.name)}">
         ${sanitizeHtml(crumb.name)}
       </a>
-    `).join('');
+    `
+      )
+      .join('');
 
     return homeLink + crumbLinks;
   }
@@ -125,12 +129,16 @@ export class UIRenderer {
           <h2>${sanitizeHtml(file.name)}</h2>
         </div>
         <div class="file-details">
-          ${details.map(detail => `
+          ${details
+            .map(
+              detail => `
             <div class="detail-item">
               <span class="detail-label">${detail.label}:</span>
               <span class="detail-value">${detail.value}</span>
             </div>
-          `).join('')}
+          `
+            )
+            .join('')}
         </div>
         <div class="action-buttons">
           <a href="${file.downloadUrl}" class="action-button" download>

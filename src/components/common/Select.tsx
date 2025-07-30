@@ -7,7 +7,8 @@ interface SelectOption {
   label: string;
 }
 
-interface SelectProps extends Omit<React.SelectHTMLAttributes<HTMLSelectElement>, 'onChange'> {
+interface SelectProps
+  extends Omit<React.SelectHTMLAttributes<HTMLSelectElement>, 'onChange'> {
   label?: string;
   options: SelectOption[];
   onChange: (value: string) => void;
@@ -18,7 +19,7 @@ const SelectContainer = styled.div<{ fullWidth?: boolean }>`
   display: flex;
   flex-direction: column;
   gap: ${({ theme }) => theme.spacing.xs};
-  width: ${({ fullWidth }) => fullWidth ? '100%' : 'auto'};
+  width: ${({ fullWidth }) => (fullWidth ? '100%' : 'auto')};
   position: relative;
 `;
 
@@ -93,7 +94,7 @@ export const Select: React.FC<SelectProps> = ({
           onChange={handleChange}
           {...props}
         >
-          {options.map((option) => (
+          {options.map(option => (
             <option key={option.value} value={option.value}>
               {option.label}
             </option>

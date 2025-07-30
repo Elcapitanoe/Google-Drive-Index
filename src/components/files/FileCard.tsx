@@ -106,9 +106,9 @@ export const FileCard: React.FC<FileCardProps> = ({ file, onClick }) => {
           <FileSize>{formatFileSize(file.size)}</FileSize>
         </FileInfo>
       </FileHeader>
-      
+
       <FileDescription>{file.description}</FileDescription>
-      
+
       <FileFooter>
         <FileDate>
           Modified {format(new Date(file.dateModified), 'MMM d, yyyy')}

@@ -40,10 +40,10 @@ const EmptyDescription = styled.p`
   font-size: ${({ theme }) => theme.typography.fontSize.base};
 `;
 
-export const FileGrid: React.FC<FileGridProps> = ({ 
-  files, 
-  loading = false, 
-  onFileClick 
+export const FileGrid: React.FC<FileGridProps> = ({
+  files,
+  loading = false,
+  onFileClick,
 }) => {
   if (loading) {
     return <LoadingSpinner size="lg" />;
@@ -55,7 +55,8 @@ export const FileGrid: React.FC<FileGridProps> = ({
         <EmptyState>
           <EmptyTitle>No files found</EmptyTitle>
           <EmptyDescription>
-            Try adjusting your search criteria or filters to find what you're looking for.
+            Try adjusting your search criteria or filters to find what you're
+            looking for.
           </EmptyDescription>
         </EmptyState>
       </GridContainer>
@@ -64,12 +65,8 @@ export const FileGrid: React.FC<FileGridProps> = ({
 
   return (
     <GridContainer>
-      {files.map((file) => (
-        <FileCard
-          key={file.id}
-          file={file}
-          onClick={onFileClick}
-        />
+      {files.map(file => (
+        <FileCard key={file.id} file={file} onClick={onFileClick} />
       ))}
     </GridContainer>
   );

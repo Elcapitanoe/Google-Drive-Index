@@ -9,7 +9,9 @@ interface ThemeContextType {
   toggleTheme: () => void;
 }
 
-export const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
+export const ThemeContext = createContext<ThemeContextType | undefined>(
+  undefined
+);
 
 interface ThemeProviderProps {
   children: ReactNode;
@@ -19,7 +21,7 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
   const [mode, setMode] = useLocalStorage<ThemeMode>('theme-mode', 'light');
 
   const toggleTheme = () => {
-    setMode(prev => prev === 'light' ? 'dark' : 'light');
+    setMode(prev => (prev === 'light' ? 'dark' : 'light'));
   };
 
   // Apply theme to document root for global styles
@@ -31,9 +33,7 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
 
   return (
     <ThemeContext.Provider value={{ mode, toggleTheme }}>
-      <StyledThemeProvider theme={theme}>
-        {children}
-      </StyledThemeProvider>
+      <StyledThemeProvider theme={theme}>{children}</StyledThemeProvider>
     </ThemeContext.Provider>
   );
 };

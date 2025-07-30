@@ -8,7 +8,9 @@ interface CardProps {
   className?: string;
 }
 
-const StyledCard = styled.div<Omit<CardProps, 'hover'> & { $isHoverable?: boolean }>`
+const StyledCard = styled.div<
+  Omit<CardProps, 'hover'> & { $isHoverable?: boolean }
+>`
   background-color: ${({ theme }) => theme.colors.surface};
   border: 1px solid ${({ theme }) => theme.colors.border};
   border-radius: ${({ theme }) => theme.borderRadius};
@@ -39,5 +41,9 @@ const StyledCard = styled.div<Omit<CardProps, 'hover'> & { $isHoverable?: boolea
 `;
 
 export const Card: React.FC<CardProps> = ({ children, hover, ...props }) => {
-  return <StyledCard $isHoverable={hover} {...props}>{children}</StyledCard>;
+  return (
+    <StyledCard $isHoverable={hover} {...props}>
+      {children}
+    </StyledCard>
+  );
 };

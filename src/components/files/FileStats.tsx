@@ -45,27 +45,27 @@ export const FileStats: React.FC<FileStatsProps> = ({ stats }) => {
         <StatValue>{stats.totalFiles.toLocaleString()}</StatValue>
         <StatLabel>Total Files</StatLabel>
       </StatCard>
-      
+
       <StatCard>
         <StatValue>{formatFileSize(stats.totalSize)}</StatValue>
         <StatLabel>Total Size</StatLabel>
       </StatCard>
-      
+
       <StatCard>
         <StatValue>{stats.typeDistribution.document || 0}</StatValue>
         <StatLabel>Documents</StatLabel>
       </StatCard>
-      
+
       <StatCard>
         <StatValue>{stats.typeDistribution.image || 0}</StatValue>
         <StatLabel>Images</StatLabel>
       </StatCard>
-      
+
       <StatCard>
         <StatValue>{stats.typeDistribution.code || 0}</StatValue>
         <StatLabel>Code Files</StatLabel>
       </StatCard>
-      
+
       <StatCard>
         <StatValue>{stats.typeDistribution.data || 0}</StatValue>
         <StatLabel>Data Files</StatLabel>

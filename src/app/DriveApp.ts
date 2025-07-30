@@ -46,10 +46,10 @@ export class DriveApp {
   private setupEventListeners(): void {
     // Handle navigation
     window.addEventListener('popstate', this.handlePopState.bind(this));
-    
+
     // Handle clicks
     document.addEventListener('click', this.handleClick.bind(this));
-    
+
     // Handle keyboard events
     document.addEventListener('keydown', this.handleKeydown.bind(this));
   }
@@ -68,7 +68,7 @@ export class DriveApp {
   private handleClick(event: Event): void {
     const target = event.target as HTMLElement;
     const fileCard = target.closest('.file-card') as HTMLAnchorElement;
-    
+
     if (fileCard) {
       event.preventDefault();
       const href = fileCard.getAttribute('href');
@@ -91,16 +91,19 @@ export class DriveApp {
   /**
    * Navigate to a specific path
    */
-  public async navigateToPath(path: string, pushState: boolean = true): Promise<void> {
+  public async navigateToPath(
+    path: string,
+    pushState: boolean = true
+  ): Promise<void> {
     try {
       this.showLoading();
-      
+
       if (pushState) {
         window.history.pushState(null, '', path);
       }
-      
+
       this.currentPath = path;
-      
+
       if (path.startsWith('/view/')) {
         const fileId = path.slice(6);
         await this.showFileDetails(fileId);
@@ -120,9 +123,9 @@ export class DriveApp {
   private async showFolderContents(folderId: string): Promise<void> {
     const [files, breadcrumbs] = await Promise.all([
       this.driveService.listFiles(folderId),
-      this.driveService.getBreadcrumbs(folderId)
+      this.driveService.getBreadcrumbs(folderId),
     ]);
-    
+
     this.uiRenderer.renderFolderView(files, breadcrumbs);
   }
 
@@ -132,9 +135,9 @@ export class DriveApp {
   private async showFileDetails(fileId: string): Promise<void> {
     const [fileDetails, breadcrumbs] = await Promise.all([
       this.driveService.getFileDetails(fileId),
-      this.driveService.getBreadcrumbs(fileId)
+      this.driveService.getBreadcrumbs(fileId),
     ]);
-    
+
     this.uiRenderer.renderFileView(fileDetails, breadcrumbs);
   }
 

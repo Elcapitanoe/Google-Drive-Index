@@ -45,11 +45,11 @@ export class ClipboardManager {
     textArea.style.position = 'fixed';
     textArea.style.left = '-999999px';
     textArea.style.top = '-999999px';
-    
+
     document.body.appendChild(textArea);
     textArea.focus();
     textArea.select();
-    
+
     try {
       document.execCommand('copy');
       this.toastManager.success('URL copied to clipboard!');

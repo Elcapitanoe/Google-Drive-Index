@@ -11,7 +11,7 @@ const InputContainer = styled.div<{ fullWidth?: boolean }>`
   display: flex;
   flex-direction: column;
   gap: ${({ theme }) => theme.spacing.xs};
-  width: ${({ fullWidth }) => fullWidth ? '100%' : 'auto'};
+  width: ${({ fullWidth }) => (fullWidth ? '100%' : 'auto')};
 `;
 
 const Label = styled.label`
@@ -22,7 +22,9 @@ const Label = styled.label`
 
 const StyledInput = styled.input<{ $hasError?: boolean }>`
   padding: ${({ theme }) => theme.spacing.sm} ${({ theme }) => theme.spacing.md};
-  border: 1px solid ${({ theme, $hasError }) => $hasError ? theme.colors.error : theme.colors.border};
+  border: 1px solid
+    ${({ theme, $hasError }) =>
+      $hasError ? theme.colors.error : theme.colors.border};
   border-radius: ${({ theme }) => theme.borderRadius};
   font-size: ${({ theme }) => theme.typography.fontSize.base};
   font-family: ${({ theme }) => theme.typography.fontFamily};
@@ -52,23 +54,19 @@ const ErrorText = styled.span`
   color: ${({ theme }) => theme.colors.error};
 `;
 
-export const Input: React.FC<InputProps> = ({ 
-  label, 
-  error, 
-  fullWidth, 
+export const Input: React.FC<InputProps> = ({
+  label,
+  error,
+  fullWidth,
   id,
-  ...props 
+  ...props
 }) => {
   const inputId = id || `input-${Math.random().toString(36).substr(2, 9)}`;
 
   return (
     <InputContainer fullWidth={fullWidth}>
       {label && <Label htmlFor={inputId}>{label}</Label>}
-      <StyledInput
-        id={inputId}
-        $hasError={!!error}
-        {...props}
-      />
+      <StyledInput id={inputId} $hasError={!!error} {...props} />
       {error && <ErrorText role="alert">{error}</ErrorText>}
     </InputContainer>
   );

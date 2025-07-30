@@ -42,10 +42,11 @@ export class RequestHandler {
    */
   createErrorResponse(error: Error, status = 500): Response {
     console.error('Request handling error:', error);
-    
-    const errorHTML = this.templateRenderer.generateHTML([], []) + 
+
+    const errorHTML =
+      this.templateRenderer.generateHTML([], []) +
       `<div class="error">Error: ${error.message || 'An unknown error occurred'}</div>`;
-    
+
     return new Response(errorHTML, {
       status,
       headers: {
@@ -81,7 +82,7 @@ export class RequestHandler {
 
       const data: ContentData = { viewFile: fileDetails };
       const html = this.templateRenderer.generateHTML(data, breadcrumbs);
-      
+
       return this.createHTMLResponse(html);
     } catch (error) {
       return this.createErrorResponse(error as Error);
@@ -97,9 +98,9 @@ export class RequestHandler {
         this.driveService.listFiles(folderId),
         this.driveService.getBreadcrumbs(folderId),
       ]);
-      
+
       const html = this.templateRenderer.generateHTML(files, breadcrumbs);
-      
+
       return this.createHTMLResponse(html);
     } catch (error) {
       return this.createErrorResponse(error as Error);
@@ -118,7 +119,7 @@ export class RequestHandler {
     try {
       const url = new URL(request.url);
       const path = url.pathname;
-      
+
       // Handle file view requests
       if (path.startsWith('/view/')) {
         const fileId = path.slice(6);
@@ -131,7 +132,6 @@ export class RequestHandler {
       // Handle folder listing requests
       const folderId = path === '/' ? 'root' : path.slice(1);
       return await this.handleFolderListing(folderId);
-      
     } catch (error) {
       return this.createErrorResponse(error as Error);
     }

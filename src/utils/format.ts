@@ -7,12 +7,12 @@
  */
 export const formatBytes = (bytes: string | number | undefined): string => {
   if (!bytes || Number(bytes) === 0) return '0 Bytes';
-  
+
   const numBytes = typeof bytes === 'string' ? parseInt(bytes, 10) : bytes;
   const k = 1024;
   const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'] as const;
   const i = Math.floor(Math.log(numBytes) / Math.log(k));
-  
+
   return `${parseFloat((numBytes / Math.pow(k, i)).toFixed(2))} ${sizes[i]}`;
 };
 
@@ -21,7 +21,7 @@ export const formatBytes = (bytes: string | number | undefined): string => {
  */
 export const formatDate = (dateString: string | undefined): string => {
   if (!dateString) return 'N/A';
-  
+
   try {
     return new Date(dateString).toLocaleString();
   } catch {

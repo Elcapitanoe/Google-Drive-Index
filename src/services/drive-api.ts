@@ -31,7 +31,7 @@ export class DriveApiService {
    */
   private async makeRequest(url: string): Promise<Response> {
     const token = await this.authService.getAccessToken();
-    
+
     const response = await fetch(url, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -50,10 +50,10 @@ export class DriveApiService {
    */
   async getFileDetails(fileId: string): Promise<FileDetails> {
     const url = `${API_ENDPOINTS.FILES}/${fileId}?fields=${DRIVE_PARAMS.FILE_FIELDS}&supportsAllDrives=true`;
-    
+
     const response = await this.makeRequest(url);
     const file: DriveFile = await response.json();
-    
+
     return {
       ...file,
       downloadUrl: `${API_ENDPOINTS.DOWNLOAD}${file.id}`,
@@ -93,9 +93,10 @@ export class DriveApiService {
    * Lists files in a folder
    */
   async listFiles(parent: string): Promise<ProcessedFile[]> {
-    const query = parent === 'root' 
-      ? `'${driveConfig.teamDriveId}' in parents and trashed = false`
-      : `'${parent}' in parents and trashed = false`;
+    const query =
+      parent === 'root'
+        ? `'${driveConfig.teamDriveId}' in parents and trashed = false`
+        : `'${parent}' in parents and trashed = false`;
 
     const params = new URLSearchParams({
       q: query,
@@ -121,15 +122,17 @@ export class DriveApiService {
       .map((file: DriveFile) => ({
         id: file.id,
         name: file.name,
-        mimeType: (file as DriveFile).mimeType === 'application/vnd.google-apps.folder' 
-          ? 'folder' 
-          : (file as DriveFile).mimeType,
+        mimeType:
+          (file as DriveFile).mimeType === 'application/vnd.google-apps.folder'
+            ? 'folder'
+            : (file as DriveFile).mimeType,
         size: file.size,
         createdTime: file.createdTime,
         modifiedTime: file.modifiedTime,
-        link: (file as DriveFile).mimeType === 'application/vnd.google-apps.folder'
-          ? `/${file.id}`
-          : `${API_ENDPOINTS.DOWNLOAD}${file.id}`,
+        link:
+          (file as DriveFile).mimeType === 'application/vnd.google-apps.folder'
+            ? `/${file.id}`
+            : `${API_ENDPOINTS.DOWNLOAD}${file.id}`,
       })) as ProcessedFile[];
   }
 }

@@ -101,7 +101,7 @@ export const FileFilters: React.FC<FileFiltersProps> = ({
           <SearchInput
             placeholder="Search files..."
             value={filter.searchTerm || ''}
-            onChange={(e) => onFilterChange({ searchTerm: e.target.value })}
+            onChange={e => onFilterChange({ searchTerm: e.target.value })}
           />
         </SearchInputWrapper>
 
@@ -109,24 +109,30 @@ export const FileFilters: React.FC<FileFiltersProps> = ({
           label="Type"
           options={typeOptions}
           value={filter.type || ''}
-          onChange={(value) => onFilterChange({ type: value as FileType || undefined })}
+          onChange={value =>
+            onFilterChange({ type: (value as FileType) || undefined })
+          }
         />
 
         <Select
           label="Category"
           options={categoryOptions}
           value={filter.category || ''}
-          onChange={(value) => onFilterChange({ category: value as FileCategory || undefined })}
+          onChange={value =>
+            onFilterChange({ category: (value as FileCategory) || undefined })
+          }
         />
 
         <Select
           label="Sort by"
           options={sortOptions}
           value={filter.sortBy || 'name'}
-          onChange={(value) => onFilterChange({ 
-            sortBy: value as FileFilter['sortBy'],
-            sortOrder: filter.sortOrder || 'asc'
-          })}
+          onChange={value =>
+            onFilterChange({
+              sortBy: value as FileFilter['sortBy'],
+              sortOrder: filter.sortOrder || 'asc',
+            })
+          }
         />
 
         {hasActiveFilters && (

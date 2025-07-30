@@ -25,10 +25,11 @@ export const useFiles = () => {
     // Apply search filter
     if (filter.searchTerm) {
       const searchLower = filter.searchTerm.toLowerCase();
-      result = result.filter(file =>
-        file.name.toLowerCase().includes(searchLower) ||
-        file.description.toLowerCase().includes(searchLower) ||
-        file.tags.some(tag => tag.toLowerCase().includes(searchLower))
+      result = result.filter(
+        file =>
+          file.name.toLowerCase().includes(searchLower) ||
+          file.description.toLowerCase().includes(searchLower) ||
+          file.tags.some(tag => tag.toLowerCase().includes(searchLower))
       );
     }
 
@@ -38,7 +39,10 @@ export const useFiles = () => {
         let aValue: any = a[filter.sortBy!];
         let bValue: any = b[filter.sortBy!];
 
-        if (filter.sortBy === 'dateCreated' || filter.sortBy === 'dateModified') {
+        if (
+          filter.sortBy === 'dateCreated' ||
+          filter.sortBy === 'dateModified'
+        ) {
           aValue = new Date(aValue).getTime();
           bValue = new Date(bValue).getTime();
         } else if (typeof aValue === 'string') {
@@ -58,16 +62,22 @@ export const useFiles = () => {
   const stats = useMemo((): FileStats => {
     const totalFiles = files.length;
     const totalSize = files.reduce((sum, file) => sum + file.size, 0);
-    
-    const typeDistribution = files.reduce((acc, file) => {
-      acc[file.type] = (acc[file.type] || 0) + 1;
-      return acc;
-    }, {} as Record<string, number>);
 
-    const categoryDistribution = files.reduce((acc, file) => {
-      acc[file.category] = (acc[file.category] || 0) + 1;
-      return acc;
-    }, {} as Record<string, number>);
+    const typeDistribution = files.reduce(
+      (acc, file) => {
+        acc[file.type] = (acc[file.type] || 0) + 1;
+        return acc;
+      },
+      {} as Record<string, number>
+    );
+
+    const categoryDistribution = files.reduce(
+      (acc, file) => {
+        acc[file.category] = (acc[file.category] || 0) + 1;
+        return acc;
+      },
+      {} as Record<string, number>
+    );
 
     return {
       totalFiles,

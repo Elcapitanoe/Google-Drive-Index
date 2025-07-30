@@ -100,9 +100,10 @@ export class ErrorBoundary extends Component<Props, State> {
             </ErrorIcon>
             <ErrorTitle>Something went wrong</ErrorTitle>
             <ErrorMessage>
-              We're sorry, but something unexpected happened. Please try refreshing the page or contact support if the problem persists.
+              We're sorry, but something unexpected happened. Please try
+              refreshing the page or contact support if the problem persists.
             </ErrorMessage>
-            
+
             {this.state.error && (
               <ErrorDetails>
                 <ErrorSummary>Show technical details</ErrorSummary>
@@ -117,11 +118,11 @@ export class ErrorBoundary extends Component<Props, State> {
                 </ErrorStack>
               </ErrorDetails>
             )}
-            
-            <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center' }}>
-              <Button onClick={this.handleReset}>
-                Try Again
-              </Button>
+
+            <div
+              style={{ display: 'flex', gap: '1rem', justifyContent: 'center' }}
+            >
+              <Button onClick={this.handleReset}>Try Again</Button>
               <Button variant="secondary" onClick={this.handleReload}>
                 <RefreshCw size={16} />
                 Reload Page

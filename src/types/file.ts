@@ -13,11 +13,20 @@ export interface FileMetadata {
 
 export type FileType = 'document' | 'image' | 'code' | 'data';
 
-export type FileCategory = 
-  | 'pdf' | 'doc' | 'docx' | 'txt'
-  | 'jpg' | 'png' | 'svg'
-  | 'ts' | 'tsx' | 'js' | 'jsx'
-  | 'json' | 'csv';
+export type FileCategory =
+  | 'pdf'
+  | 'doc'
+  | 'docx'
+  | 'txt'
+  | 'jpg'
+  | 'png'
+  | 'svg'
+  | 'ts'
+  | 'tsx'
+  | 'js'
+  | 'jsx'
+  | 'json'
+  | 'csv';
 
 export interface FileFilter {
   type?: FileType;

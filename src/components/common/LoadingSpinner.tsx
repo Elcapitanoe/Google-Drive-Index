@@ -49,7 +49,7 @@ const Container = styled.div`
   padding: ${({ theme }) => theme.spacing.md};
 `;
 
-export const LoadingSpinner: React.FC<LoadingSpinnerProps> = (props) => {
+export const LoadingSpinner: React.FC<LoadingSpinnerProps> = props => {
   return (
     <Container>
       <Spinner {...props} />
