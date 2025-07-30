@@ -25,4 +25,4 @@ jobs:
         uses: WorkOfStan/prettier-fix@v1.1.5
         with:
           commit-changes: true
-          commit-message: "Apply Prettier auto‑fixes"
+          commit-message: "style(prettier): auto-format code via CI pipeline"
