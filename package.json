@@ -13,7 +13,7 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
-    "@types/react": "^19.1.9",
+    "@types/react": "^19.1.15",
     "@types/react-dom": "^19.1.1",
     "@types/react-router-dom": "^5.3.3",
     "@types/styled-components": "^5.1.34",
