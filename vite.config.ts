@@ -11,21 +11,12 @@ export default defineConfig({
   },
   build: {
     outDir: 'dist',
-    sourcemap: true,
+    sourcemap: false,
     chunkSizeWarningLimit: 1000,
     target: 'es2022',
-    minify: 'esbuild',
   },
   server: {
     port: 3000,
-    open: true,
     host: true,
-  },
-  preview: {
-    port: 4173,
-    host: true,
-  },
-  esbuild: {
-    target: 'es2022',
   },
 });
