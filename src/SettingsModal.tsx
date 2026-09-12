@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { Settings, X, Key, FolderGit2 } from 'lucide-react';
-import { DriveConfig, saveStoredConfig } from './api';
+import React, { useState, useEffect, useRef } from 'react';
+import { Settings, X, Key, FolderGit2, Trash2 } from 'lucide-react';
+import { DriveConfig, saveStoredConfig, clearFolderCache } from './api';
 
 interface SettingsModalProps {
   config: DriveConfig;
@@ -15,8 +15,33 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
   onClose,
   onSave,
 }) => {
-  const [apiKey, setApiKey] = useState(config.apiKey || '');
-  const [rootFolderId, setRootFolderId] = useState(config.rootFolderId || 'root');
+  const [apiKey, setApiKey] = useState(config.apiKey);
+  const [rootFolderId, setRootFolderId] = useState(config.rootFolderId);
+  const modalRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (isOpen) {
+      setApiKey(config.apiKey);
+      setRootFolderId(config.rootFolderId);
+      inputRef.current?.focus();
+
+      const originalOverflow = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+
+      const handleKeyDown = (event: KeyboardEvent) => {
+        if (event.key === 'Escape') {
+          onClose();
+        }
+      };
+
+      window.addEventListener('keydown', handleKeyDown);
+      return () => {
+        document.body.style.overflow = originalOverflow;
+        window.removeEventListener('keydown', handleKeyDown);
+      };
+    }
+  }, [isOpen, config, onClose]);
 
   if (!isOpen) return null;
 
@@ -31,69 +56,118 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
     onClose();
   };
 
+  const handleReset = () => {
+    setApiKey('');
+    setRootFolderId('root');
+    clearFolderCache();
+  };
+
   return (
-    <div className="modal-overlay" onClick={onClose}>
-      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+    <div className="modal-backdrop" onClick={onClose} role="presentation">
+      <div
+        ref={modalRef}
+        className="modal-container"
+        onClick={e => e.stopPropagation()}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="settings-modal-title"
+      >
         <div className="modal-header">
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            <Settings size={18} />
-            <h2 className="modal-title">Drive API Configuration</h2>
+          <div className="modal-title-wrap">
+            <div className="modal-icon-badge">
+              <Settings size={16} />
+            </div>
+            <h2 id="settings-modal-title" className="modal-title">
+              Google Drive Configuration
+            </h2>
           </div>
-          <button className="btn-icon" onClick={onClose} aria-label="Close modal">
-            <X size={18} />
+          <button
+            type="button"
+            className="action-btn icon-only"
+            onClick={onClose}
+            aria-label="Close configuration modal"
+          >
+            <X size={16} />
           </button>
         </div>
-        <form onSubmit={handleSubmit}>
+
+        <form onSubmit={handleSubmit} className="modal-form">
           <div className="modal-body">
-            <div className="form-group">
-              <label className="form-label" htmlFor="apiKey">
-                Google Drive API Key
+            <div className="field-group">
+              <label className="field-label" htmlFor="gdrive-api-key">
+                Google Cloud API Key
               </label>
-              <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
+              <div className="input-affix-wrapper">
+                <span className="input-prefix-icon" aria-hidden="true">
+                  <Key size={14} />
+                </span>
                 <input
-                  id="apiKey"
+                  ref={inputRef}
+                  id="gdrive-api-key"
                   type="password"
-                  className="form-input"
-                  style={{ width: '100%', paddingLeft: '2rem' }}
+                  autoComplete="off"
+                  spellCheck="false"
+                  className="text-input with-prefix"
                   placeholder="AIzaSy..."
                   value={apiKey}
-                  onChange={(e) => setApiKey(e.target.value)}
+                  onChange={e => setApiKey(e.target.value)}
                 />
-                <Key size={14} style={{ position: 'absolute', left: '0.625rem', color: 'var(--text-muted)' }} />
               </div>
-              <span className="form-hint">
-                Google Cloud Console API key with Drive API v3 enabled.
-              </span>
+              <p className="field-hint">
+                Google Cloud Console API key with Google Drive API v3 enabled.
+                Leave empty to use demonstration fixtures.
+              </p>
             </div>
 
-            <div className="form-group">
-              <label className="form-label" htmlFor="rootFolderId">
+            <div className="field-group">
+              <label className="field-label" htmlFor="gdrive-root-folder">
                 Root Folder ID
               </label>
-              <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
+              <div className="input-affix-wrapper">
+                <span className="input-prefix-icon" aria-hidden="true">
+                  <FolderGit2 size={14} />
+                </span>
                 <input
-                  id="rootFolderId"
+                  id="gdrive-root-folder"
                   type="text"
-                  className="form-input"
-                  style={{ width: '100%', paddingLeft: '2rem' }}
-                  placeholder="root or folder ID"
+                  autoComplete="off"
+                  spellCheck="false"
+                  className="text-input with-prefix"
+                  placeholder="root or 0B1234..."
                   value={rootFolderId}
-                  onChange={(e) => setRootFolderId(e.target.value)}
+                  onChange={e => setRootFolderId(e.target.value)}
                 />
-                <FolderGit2 size={14} style={{ position: 'absolute', left: '0.625rem', color: 'var(--text-muted)' }} />
               </div>
-              <span className="form-hint">
-                Target Google Drive folder ID or "root".
-              </span>
+              <p className="field-hint">
+                Specific folder ID from Google Drive URL or leave
+                &quot;root&quot; for the drive root. The folder must have
+                sharing set to Anyone with the link.
+              </p>
             </div>
           </div>
+
           <div className="modal-footer">
-            <button type="button" className="btn btn-secondary" onClick={onClose}>
-              Cancel
+            <button
+              type="button"
+              className="action-btn text-btn danger-hover"
+              onClick={handleReset}
+              title="Reset configuration to defaults"
+            >
+              <Trash2 size={14} />
+              <span>Reset</span>
             </button>
-            <button type="submit" className="btn btn-primary">
-              Save Configuration
-            </button>
+            <div className="modal-footer-actions">
+              <button
+                type="button"
+                className="action-btn secondary-btn"
+                onClick={onClose}
+              >
+                Cancel
+              </button>
+              <button type="submit" className="action-btn primary-btn">
+                Apply Changes
+              </button>
+            </div>
           </div>
         </form>
       </div>
